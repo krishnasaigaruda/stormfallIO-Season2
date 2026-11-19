@@ -7,7 +7,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(ROOT)
 PACKS = {
     'models': sorted(glob.glob('assets/models/s2/*.glb')) + sorted(glob.glob('assets/models/pets/*.glb'))
-              + ['assets/models/' + f for f in ('Xbot.glb', 'Soldier.glb', 'Michelle.glb', 'readyplayer.me.glb')],
+              + ['assets/models/Xbot.glb'],
     'chars': sorted(glob.glob('assets/models/chars/*.glb')),
     'textures': sorted(f for f in glob.glob('assets/textures/s2/*.jpg') if not f.endswith('_ao.jpg')),
 }

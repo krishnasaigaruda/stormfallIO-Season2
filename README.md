@@ -111,6 +111,40 @@ tools/build_pack.py   rebuilds assets/pack
 | [Red/White Beach Umbrella](https://poly.pizza/m/2li3sdSkmCI) | S. Paul Michael | CC-BY 3.0 |
 | [Blue/White Beach Umbrella](https://poly.pizza/m/1BLLDjRdxoa) | S. Paul Michael | CC-BY 3.0 |
 | [SeaSide Villa](https://poly.pizza/m/03rq-iA54uU) | Yogoshimo 2.0 | CC-BY 3.0 |
+| [Desk](https://poly.pizza/m/ISpMh81QGq) | dook | CC-BY 3.0 |
+| [Desk](https://poly.pizza/m/c406LNgto0n) | Niko Hokkanen | CC-BY 3.0 |
+| [Computer](https://poly.pizza/m/2EHvZLax4Y3) | Poly by Google | CC-BY 3.0 |
+| [Office Chair](https://poly.pizza/m/dCEsSsJJ1Md) | CMHT Oculus | CC-BY 3.0 |
+| [Lounge Sofa](https://poly.pizza/m/jMu2iCmGxU) | Kenney | CC0 1.0 |
+| [Couch | Wide](https://poly.pizza/m/7Q_Ab2HLll1) | Danni Bittman | CC-BY 3.0 |
+| [Fiddle-leaf Plant](https://poly.pizza/m/2ag6_uuqsnb) | Poly by Google | CC-BY 3.0 |
+| [Umbrella palm tree](https://poly.pizza/m/8Qwgncb6dJT) | Poly by Google | CC-BY 3.0 |
+| [Vending Machine](https://poly.pizza/m/0CX6wj64Swu) | Don Carson | CC-BY 3.0 |
+| [Vending Machine](https://poly.pizza/m/ZhziWexNWk) | J-Toastie | CC-BY 3.0 |
+| [Water Cooler](https://poly.pizza/m/zWi9p5FSxD) | J-Toastie | CC-BY 3.0 |
+| [Ping pong table](https://poly.pizza/m/3OK0PHaS9Wi) | Poly by Google | CC-BY 3.0 |
+| [Electronic Game](https://poly.pizza/m/QIJoiNqjrk) | burunduk | CC-BY 3.0 |
+| [Lemonade](https://poly.pizza/m/1qo2vlHOgUF) | zeoxo | CC-BY 3.0 |
+| [Dumpster](https://poly.pizza/m/ASkP8wjEGs) | KolosStudios | CC-BY 3.0 |
+| [Trash can](https://poly.pizza/m/0yT-YR5yO4L) | Poly by Google | CC-BY 3.0 |
+| [Trash Bags](https://poly.pizza/m/eitNk4I4R1) | Quaternius | CC0 1.0 |
+| [Cone](https://poly.pizza/m/itiogTZUAX) | Zsky | CC-BY 3.0 |
+| [Traffic Barrier](https://poly.pizza/m/SInF9le9Ch) | Zsky | CC-BY 3.0 |
+| [Fire hydrant](https://poly.pizza/m/eNPaSEPrst8) | Poly by Google | CC-BY 3.0 |
+| [Cardboard Boxes](https://poly.pizza/m/V9KbWC8Vd6) | Quaternius | CC0 1.0 |
+| [Red/White Beach Umbrella](https://poly.pizza/m/2li3sdSkmCI) | S. Paul Michael | CC-BY 3.0 |
+| [Rainbow Beach Umbrella](https://poly.pizza/m/cAna-B5z-45) | S. Paul Michael | CC-BY 3.0 |
+| [Bench](https://poly.pizza/m/dOSjmdmKaxi) | Ev Amitay | CC-BY 3.0 |
+| [Picnic Table](https://poly.pizza/m/LM6QWe8kFT) | J-Toastie | CC-BY 3.0 |
+| [Fountain](https://poly.pizza/m/4KKY7CmNe_r) | Poly by Google | CC-BY 3.0 |
+| [Three way traffic light](https://poly.pizza/m/ayAwgj82oUR) | Poly by Google | CC-BY 3.0 |
+| [Street Objects - Lamp Post](https://poly.pizza/m/awUS2qoxeSa) | Ev Amitay | CC-BY 3.0 |
+| [Stop sign](https://poly.pizza/m/60GyU9CdZ9r) | Poly by Google | CC-BY 3.0 |
+| [Safe](https://poly.pizza/m/N4egHD2Vms) | CreativeTrio | CC0 1.0 |
+| [Cannon](https://poly.pizza/m/J15vlPVvKK) | Quaternius | CC0 1.0 |
+| [Workbench Anvil](https://poly.pizza/m/bY1pp3kAAb) | Kenney | CC0 1.0 |
+| [Telescope](https://poly.pizza/m/RjyTCQvA8b) | CreativeTrio | CC0 1.0 |
+| [Clam](https://poly.pizza/m/8675QcluLQX) | Poly by Google | CC-BY 3.0 |
 | [Hostel](https://poly.pizza/m/e0NvYcgQABj) | Poly by Google | CC-BY 3.0 |
 | [Sand castle](https://poly.pizza/m/5iuHHfVoaza) | Poly by Google | CC-BY 3.0 |
 | [House](https://poly.pizza/m/fdaqERLQCc) | Pixel | CC-BY 3.0 |
@@ -153,6 +187,74 @@ tools/build_pack.py   rebuilds assets/pack
 | [Stove Oven](https://poly.pizza/m/uBzXbRF6LQ) | MilkAndBanana | CC0 1.0 |
 | [Kitchen Cabinet](https://poly.pizza/m/tWyOLYYHPw) | Kenney | CC0 1.0 |
 | [TV](https://poly.pizza/m/2flJebZTUrg) | Jarlan Perez | CC-BY 3.0 |
+
+### Season 2 boats, helicopters, outfits, devices and event props
+| Model | Author | License |
+|---|---|---|
+| [Boat](https://poly.pizza/m/8vekojz4Abf) | Poly by Google | CC-BY 3.0 |
+| [Boat](https://poly.pizza/m/c2SYxaiPfF3) | Poly by Google | CC-BY 3.0 |
+| [Helicopter](https://poly.pizza/m/eb7b31pjGtQ) | jeremy | CC-BY 3.0 |
+| [Helicopter](https://poly.pizza/m/cTzINMr0WdS) | Poly by Google | CC-BY 3.0 |
+| [Dock Long](https://poly.pizza/m/bN9Oz3niNm) | Quaternius | CC0 1.0 |
+| [Witch](https://poly.pizza/m/QBEOV9ZUT8) | Quaternius | CC-BY 3.0 |
+| [Shrine](https://poly.pizza/m/tFxdxO5clk) | Kay Lousberg | CC0 1.0 |
+| [Bonfire](https://poly.pizza/m/Azj9hJwwwG) | Quaternius | CC0 1.0 |
+| [Hammock](https://poly.pizza/m/bsp0Uzr6cSI) | Poly by Google | CC-BY 3.0 |
+| [beach ball](https://poly.pizza/m/4IwPTeOmq6c) | the_ normalgamer | CC-BY 3.0 |
+| [Bottle](https://poly.pizza/m/FAHsHFXfTf) | Quaternius | CC0 1.0 |
+| [Fishing Pole](https://poly.pizza/m/eyuCxAqI9er) | Shawn Westphal | CC-BY 3.0 |
+| [Logs](https://poly.pizza/m/fei4I7FfrJ) | Quaternius | CC0 1.0 |
+| [Ammo Can](https://poly.pizza/m/9xeB2FkEYr) | Pichuliru | CC0 1.0 |
+| [Crystal](https://poly.pizza/m/WzWPKHFMkL) | iPoly3D | CC0 1.0 |
+| [Shovel](https://poly.pizza/m/oNBQSf87ZJ) | Quaternius | CC0 1.0 |
+| [Sea Urchin](https://poly.pizza/m/f4iwEhEP3-d) | Poly by Google | CC-BY 3.0 |
+| [Clam](https://poly.pizza/m/65ObbG0O7Ze) | Poly by Google | CC-BY 3.0 |
+| [Ski lift pole](https://poly.pizza/m/1nMSE0mYj_C) | Poly by Google | CC-BY 3.0 |
+| [Spiky Ball](https://poly.pizza/m/HEKBGK7iIk) | Quaternius | CC0 1.0 |
+| [Balloon](https://poly.pizza/m/d1gDDhM7pTf) | Poly by Google | CC-BY 3.0 |
+| [Heart](https://poly.pizza/m/8RA5hHU5gHK) | Poly by Google | CC-BY 3.0 |
+| [Bush with Flowers](https://poly.pizza/m/U1ymDy8tbY) | Quaternius | CC0 1.0 |
+| [Firework](https://poly.pizza/m/7ZuN5uYCrbf) | Josh Graham | CC-BY 3.0 |
+| [Egg](https://poly.pizza/m/3xseQxXMXPL) | Poly by Google | CC-BY 3.0 |
+| [Rubber Duck](https://poly.pizza/m/9pffFcv7LSm) | Poly by Google | CC-BY 3.0 |
+| [Popsicle](https://poly.pizza/m/08qNOboczRk) | Poly by Google | CC-BY 3.0 |
+| [Firework](https://poly.pizza/m/nExftOJJ8x) | GkStudio | CC-BY 3.0 |
+| [Haystack](https://poly.pizza/m/6LeCqyw00RK) | Poly by Google | CC-BY 3.0 |
+| [Corn](https://poly.pizza/m/IhhB7kGaAQ) | Quaternius | CC0 1.0 |
+| [Pie](https://poly.pizza/m/eu-vRr2-5dY) | Poly by Google | CC-BY 3.0 |
+| [Turkey](https://poly.pizza/m/4f31_AG9Iap) | Poly by Google | CC-BY 3.0 |
+| [Christmas Tree](https://poly.pizza/m/exL-ilJKlZt) | Don Carson | CC-BY 3.0 |
+| [Flower Group](https://poly.pizza/m/hfPzQAedOe) | Quaternius | CC0 1.0 |
+| [Snow Man](https://poly.pizza/m/562IGbxkrTC) | Taiga Yonemoto | CC-BY 3.0 |
+| [Present](https://poly.pizza/m/eHwOj9QQa3) | ParfaitUwU | CC-BY 3.0 |
+| [Complex Health Potion](https://poly.pizza/m/5DvOJDIgDYu) | Garrett LeFever | CC-BY 3.0 |
+| [Clover](https://poly.pizza/m/aCdjtvG0dvD) | Poly by Google | CC-BY 3.0 |
+| [Pumpkin](https://poly.pizza/m/XYPzyxSw3c) | CreativeTrio | CC0 1.0 |
+| [Pumpkin](https://poly.pizza/m/bvLvqnU1jX) | Quaternius | CC0 1.0 |
+| [Scarecrow](https://poly.pizza/m/7qFs_DjjuVp) | Poly by Google | CC-BY 3.0 |
+| [Character Animated (outfit body)](https://poly.pizza/m/DgOCW9ZCRJ) | Quaternius | CC0 1.0 |
+| [Woman in Dress (outfit body)](https://poly.pizza/m/zMyPlQXBzq) | Quaternius | CC0 1.0 |
+| [Astronaut (outfit body)](https://poly.pizza/m/3hC2i0CTuO) | Quaternius | CC0 1.0 |
+| [Worker (outfit body)](https://poly.pizza/m/Yg2bQZO6Hj) | Quaternius | CC0 1.0 |
+| [Animated Woman (outfit body)](https://poly.pizza/m/qJ2gsTUBHL) | Quaternius | CC0 1.0 |
+| [Alien (outfit body)](https://poly.pizza/m/HYUUkdugoP) | Quaternius | CC0 1.0 |
+| [King (outfit body)](https://poly.pizza/m/I1gTjmuK2m) | Quaternius | CC0 1.0 |
+| [Ninja (outfit body)](https://poly.pizza/m/xGYmeDpfTu) | Quaternius | CC0 1.0 |
+| [Man (outfit body)](https://poly.pizza/m/HMnuH5geEG) | Quaternius | CC0 1.0 |
+| [Woman (outfit body)](https://poly.pizza/m/AQsd9ngvKU) | Quaternius | CC0 1.0 |
+| [Man in Suit (outfit body)](https://poly.pizza/m/mQnGoME1ez) | Quaternius | CC0 1.0 |
+| [Animated Woman (outfit body)](https://poly.pizza/m/9kF7eTDbhO) | Quaternius | CC0 1.0 |
+| [Characters Shaun (outfit body)](https://poly.pizza/m/eJFT9MxzOM) | Quaternius | CC0 1.0 |
+| [Bunny (outfit body)](https://poly.pizza/m/irZjWFARyl) | Quaternius | CC0 1.0 |
+| [Animated Platformer Character (outfit body)](https://poly.pizza/m/kKtL4zvS3n) | Quaternius | CC0 1.0 |
+| [Casual Character (outfit body)](https://poly.pizza/m/kZ3DmIoGip) | Quaternius | CC0 1.0 |
+| [Astronaut (outfit body)](https://poly.pizza/m/0D54W8yfrA) | Quaternius | CC0 1.0 |
+| [Alien (outfit body)](https://poly.pizza/m/RRliSQBP7r) | Quaternius | CC0 1.0 |
+| [Farmer (outfit body)](https://poly.pizza/m/7pn3R6hPvE) | Quaternius | CC0 1.0 |
+| [Worker (outfit body)](https://poly.pizza/m/E8079Ahx7k) | Quaternius | CC-BY 3.0 |
+| [Animated Woman (outfit body)](https://poly.pizza/m/nIItLV9nxS) | Quaternius | CC0 1.0 |
+| [Animated Wizard (outfit body)](https://poly.pizza/m/kttbFvCl2C) | Quaternius | CC-BY 3.0 |
+| [Hacker-Craft Runabout](https://sketchfab.com/3d-models/hacker-craft-runabout-88fd71fc831f4332a97e27e3b0e6b857) | trivial.cat | Sketchfab Standard |
 
 ### PBR materials
 Ground080, Grass005, Rock058, Ground054, Planks033B, PaintedWood009C, Tiles143, CorrugatedSteel007A and RoofingTiles014A and ThatchedRoof001A from [ambientCG](https://ambientcg.com), CC0 1.0.
