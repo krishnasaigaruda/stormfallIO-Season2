@@ -7465,7 +7465,7 @@ P.pts.forEach((q,i)=>{q.y=Math.max(h[i],lo);q.fill=q.y-q.b;});}}eq();
      for(const q of pts){q.y=Math.max(q.y,lo);q.fill=q.y-q.b;}}
    // roads come down to town level: points inside a town sit on the town flat, crossings move with them, the rest ramps away
    const TF=FLATS.filter(f=>f.r>=40),TP=new Map(),HARD=new Set();
-   for(const P of plans){const n=P.pts.length;P.pts.forEach((q,i)=>{for(const f of TF){const dd=Math.hypot(q.x-f.x,q.z-f.z);if(dd<f.r+2){TP.set(q,f.y);if(dd<f.r-28||((i===0||i===n-1)&&dd<f.r))HARD.add(q);break;}}});}
+   for(const P of plans){const n=P.pts.length;P.pts.forEach((q,i)=>{for(const f of TF){const dd=Math.hypot(q.x-f.x,q.z-f.z);if(dd<f.r+2){TP.set(q,f.y);if(dd<f.r-28||((i===0||i===n-1)&&dd<f.r&&!PIN.has(q)))HARD.add(q);break;}}});}
    for(let k=0;k<3;k++)for(const [p,q] of OV){if(TP.has(p)&&!TP.has(q))TP.set(q,TP.get(p));else if(TP.has(q)&&!TP.has(p))TP.set(p,TP.get(q));}
    if(TP.size){const ramp=(fixd,mul)=>{for(const P of plans){const pts=P.pts,n=pts.length,g=(P.rail?.045:.08)*mul*step;for(const q of HARD)q.y=TP.get(q);
        for(let pass=0;pass<3;pass++){for(let i=1;i<n;i++)if(!fixd(pts[i]))pts[i].y=clamp(pts[i].y,pts[i-1].y-g,pts[i-1].y+g);for(let i=n-2;i>=0;i--)if(!fixd(pts[i]))pts[i].y=clamp(pts[i].y,pts[i+1].y-g,pts[i+1].y+g);}}};
@@ -7475,7 +7475,9 @@ P.pts.forEach((q,i)=>{q.y=Math.max(h[i],lo);q.fill=q.y-q.b;});}}eq();
      for(const P of plans){const pts=P.pts,n=pts.length,g=(P.rail?.045:.08)*2.2*step,fx=i=>HARD.has(pts[i])||PIN.has(pts[i]);
        for(let i=1;i<n-1;){if(fx(i)){i++;continue;}let e=i;while(e<n-1&&!fx(e))e++;const s0=i-1;if(e<n&&fx(e)&&fx(s0)){let bad=false;for(let k=s0;k<e;k++)if(Math.abs(pts[k+1].y-pts[k].y)>g){bad=true;break;}
          if(bad){const ya=pts[s0].y,yb=pts[e].y;for(let k=i;k<e;k++)pts[k].y=ya+(yb-ya)*(k-s0)/(e-s0);}}i=e+1;}}
-     for(const P of plans)for(const q of P.pts){if(HARD.has(q))q.y=TP.get(q);q.y=Math.max(q.y,lo);q.fill=q.y-q.b;}}}
+     for(const P of plans)for(const q of P.pts){if(HARD.has(q))q.y=TP.get(q);q.y=Math.max(q.y,lo);q.fill=q.y-q.b;}
+     // last pass: roads that meet or run side by side end up at exactly the same height (a town point wins, otherwise they meet halfway)
+     for(let r=0;r<4;r++)for(const [p,q] of OV){const hp=HARD.has(p),hq=HARD.has(q);if(hp&&hq)continue;const y=hp?p.y:hq?q.y:(p.y+q.y)/2;p.y=q.y=Math.max(y,lo);p.fill=p.y-p.b;q.fill=q.y-q.b;}}}
   for(const P of plans)roads.push({pts:P.pts,W:P.rail?6:W,a:P.a,b:P.b,rail:!!P.rail});
   const grid=new Map(),CS=8;roads.forEach((R,r)=>{for(let i=0;i<R.pts.length-1;i++){const a=R.pts[i],b=R.pts[i+1],m=R.W/2+60;
     for(let cx=Math.floor((Math.min(a.x,b.x)-m)/CS);cx<=Math.floor((Math.max(a.x,b.x)+m)/CS);cx++)for(let cz=Math.floor((Math.min(a.z,b.z)-m)/CS);cz<=Math.floor((Math.max(a.z,b.z)+m)/CS);cz++){const k=cx*65536+cz;let l=grid.get(k);if(!l){l=[];grid.set(k,l);}l.push(r,i);}}});
