@@ -8672,8 +8672,8 @@ const _s2hcCU=s2CraftUpdate;s2CraftUpdate=function(v,dt){_s2hcCU(v,dt);if(v.craf
     v.fs=v.vel.x*fx+v.vel.z*fz;if(v.strafe!==undefined)v.strafe=v.vel.x*c-v.vel.z*sn;
     // bots climb over whatever they bumped into
     if(hit&&v.driver&&v.driver!==player)v._climbT=gameTime+1.2;
-    v.root.position.copy(v.pos);if(v.driver){v.driver.pos.x+=mx;v.driver.pos.z+=mz;}window.__hcDbg={mx,mz,hit,y:v.pos.y,fs:v.fs};}catch(e){window.__hcDbg={err:e.message};}
-  if(v._climbT>gameTime&&v.driver&&v.driver!==player&&v.fuel>0){v.pos.y+=9*dt;v.vy=Math.max(v.vy,0);v.root.position.y=v.pos.y;v.driver.pos.y+=9*dt;}};
+    v.root.position.copy(v.pos);if(v.driver){v.driver.pos.x+=mx;v.driver.pos.z+=mz;}if(v.driver!==player)window.__hcDbg={mx,mz,hit,y:v.pos.y,fs:v.fs};}catch(e){window.__hcDbg={err:e.message};}
+  if(v.driver!==player&&v.driver)window.__hcDbg2={ct:v._climbT,gt:gameTime,f:v.fuel,y:v.pos.y};if(v._climbT>gameTime&&v.driver&&v.driver!==player&&v.fuel>0){v.pos.y+=9*dt;v.vy=Math.max(v.vy,0);v.root.position.y=v.pos.y;v.driver.pos.y+=9*dt;}};
 // bots hop on a stopped train when they have a long way to go, and hop off near their goal
 let s2bT=0;
 function s2bTick(dt){s2bT-=dt;if(s2bT>0)return;s2bT=1;if(!S2R.cars.length)return;
