@@ -744,7 +744,7 @@ html,body{background:var(--ink)}
 @media (max-width:720px){.s2newsList{grid-template-columns:1fr}}
 .wallet .sb,.wallet .lvl{font-size:18px!important;padding:5px 11px!important;line-height:1}
 #tabs button{font-size:clamp(13px,1.05vw,18px)!important}
-#tabs button{font-size:clamp(15px,1.3vw,23px)!important;padding:9px clamp(6px,.62vw,14px)!important;letter-spacing:.05em!important}
+#tabs button{font-size:clamp(14px,1.22vw,23px)!important;padding:9px clamp(5px,.58vw,14px)!important;letter-spacing:.045em!important}
 .topbar{padding-top:10px!important;padding-bottom:10px!important}
 .s2newsList{grid-auto-rows:max-content!important;align-content:start!important}
 .s2newsItem{overflow:visible!important;cursor:pointer;transition:transform .12s,border-color .12s}
@@ -1038,6 +1038,7 @@ html,body{background:var(--ink)}
         <label for="renderScale">3D render scale <output class="settingValue" id="renderScaleVal">100%</output><input id="renderScale" type="range" min="0.6" max="1.2" step="0.05" value="1"></label>
         <label for="shadows">Dynamic shadows<select id="shadows"><option value="1" selected>On</option><option value="0">Off (better performance)</option></select></label>
         <label for="bloom">Bloom and glow<select id="bloom"><option value="1" selected>On</option><option value="0">Off</option></select></label>
+        <label for="fpsCap">Frame rate limit<select id="fpsCap"><option value="60">60 FPS (recommended)</option><option value="30">30 FPS (battery saver, slow PCs)</option><option value="0">Unlimited</option></select></label>
         <button class="btn small" id="optBtn" type="button" style="justify-self:start">Optimize for my PC</button>
         <p class="settingsHint">Optimize for my PC switches to the Potato preset, turns off shadows and glow, and lowers the render scale: the fastest the game can run. Auto adjusts quality based on performance. Render scale trades image sharpness for frame rate. Higher presets use more GPU and memory.</p>
       </div></section>
@@ -1138,6 +1139,7 @@ html,body{background:var(--ink)}
     <section class="settingsGroup"><h4>Graphics</h4><div class="opts">
       <label>Quality<select id="pQual"><option value="auto">Auto</option><option value="ultra">Ultra</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option><option value="potato">Potato (fastest)</option></select></label>
       <label>Render scale <output id="pRenderScaleVal">100%</output><input id="pRenderScale" type="range" min="0.6" max="1.2" step="0.05" value="1"></label>
+      <label>Frame rate limit<select id="pFpsCap"><option value="60">60 FPS</option><option value="30">30 FPS</option><option value="0">Unlimited</option></select></label>
       <button class="btn small" id="pOptBtn" type="button">Optimize for my PC</button>
       <label>Dynamic shadows<select id="pShadows"><option value="1">On</option><option value="0">Off</option></select></label>
       <label>Bloom and glow<select id="pBloom"><option value="1">On</option><option value="0">Off</option></select></label>
@@ -1279,13 +1281,16 @@ const SKINS=['#f0c8a4','#d8a07a','#b07550','#7a4a32','#ffdcbf','#8e5a3a'];
 
 const SET={sens:1,skill:1,quality:'high',fov:80,aa:1,cam:0,shoulder:1,autoReload:true,renderScale:1,shadows:true,bloom:true,sfx:.75};
 // pixel ratio cap per tier: Retina Macs report devicePixelRatio 2, so "high" renders sharper than the old 0.65 low default
-const QUAL={ultra:{scale:1,dpr:2,msaa:4,shadow:4096,grass:90000,bloom:true,dist:640},high:{scale:1,dpr:1.6,msaa:4,shadow:4096,grass:70000,bloom:true,dist:560},medium:{scale:1,dpr:1.25,msaa:2,shadow:2048,grass:34000,bloom:true,dist:440},low:{scale:1,dpr:1,msaa:0,shadow:1024,grass:12000,bloom:true,dist:340},potato:{scale:.7,dpr:1,msaa:0,shadow:512,grass:0,bloom:false,dist:240}};
+const QUAL={ultra:{scale:1,dpr:2,msaa:4,shadow:4096,grass:90000,bloom:true,dist:640},high:{scale:1,dpr:1.5,msaa:4,shadow:2048,grass:70000,bloom:true,dist:560},medium:{scale:1,dpr:1.25,msaa:2,shadow:1536,grass:34000,bloom:true,dist:440},low:{scale:1,dpr:1,msaa:0,shadow:1024,grass:12000,bloom:true,dist:340},potato:{scale:.7,dpr:1,msaa:0,shadow:512,grass:0,bloom:false,dist:240}};
 let Q=QUAL.high;
 const U={time:{value:0}};
 
 // ============================================================ RENDERER
 const canvas=$('c');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'high-performance',stencil:false});
+var S2FPS=(()=>{try{const v=localStorage.getItem('stormfall.fps');return v==null?60:+v;}catch(e){return 60;}})();
+var S2WEAK=(()=>{try{const n=navigator.hardwareConcurrency||4,m=navigator.deviceMemory||8;let gpu='';const gl=renderer.getContext(),ext=gl.getExtension('WEBGL_debug_renderer_info');if(ext)gpu=String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL));
+  return n<=4||m<=4||/Intel|HD Graphics|UHD|Iris|Mali|Adreno|PowerVR|SwiftShader|llvmpipe|Software/i.test(gpu);}catch(e){return false;}})();
 renderer.outputEncoding=THREE.LinearEncoding;renderer.toneMapping=THREE.NoToneMapping;
 renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 const isGL2=renderer.capabilities.isWebGL2;
@@ -4182,7 +4187,7 @@ function distanceCull(){const c=camera.position,D=Q.dist,D2=D*D;rebuildCamBlocke
   for(const pk of pickups)pk.g.visible=(pk.x-c.x)**2+(pk.z-c.z)**2<(pk.item.type==='gun'&& pk.item.r>=2?200*200:140*140);
   for(const ch of chests)ch.g.visible=(ch.x-c.x)**2+(ch.z-c.z)**2<D2;}
 let mmT=0,last=performance.now();
-function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/1000);last=now;
+function loop(now){requestAnimationFrame(loop);if(S2FPS>0&&now-last<1000/S2FPS-1.5)return;const dt=Math.min(.05,(now-last)/1000);last=now;
   if(gameState==='edit'){editorUpdate(dt);renderFrame();return;}
   if(gameState==='menu'){U.time.value+=dt;gameTime+=dt;scene.updateMatrixWorld();updateLobby(dt);syncWorld(dt);renderFrame();return;}
   if(paused){renderFrame();return;}step(dt);renderFrame();}
@@ -4232,7 +4237,7 @@ function spawnCustomCharacters(){const pads=editorDevices.filter(d=>d.t==='spawn
     c.pos.set(x,y+.08,z);c.vel.set(0,0,0);c.state='ground';c.seat=null;c.onGround=false;c.noFallT=gameTime+2;c.m.root.visible=true;if(c.ai){c.ai.landT=gameTime;c.ai.goal=null;c.ai.goalObj=null;}}
 }
 function startGame(){clearSpriteLoadoutOutsideBR();BOT_N=0;matKey='';for(const drop of crownDrops)scene.remove(drop.g);crownDrops.length=0;rankedMatch=$('rankedToggle').checked&&rankedMode();carryingCrown=rankedMode()&&PROFILE.ranked.crownCarry;
-  SET.skill=+$('diff').value;SET.sens=+$('sens').value;const qv=$('qual').value;AQ.on=qv==='auto';SET.quality=AQ.on?(TOUCH.on?'low':'medium'):qv;SET.fov=+$('fov').value;SET.aa=+$('aa').value;SET.cam=+$('cam').value;SET.autoReload=$('arl').value!=='0';applyQuality();initAudio();initMatch();sfTrack('match_start',{mode:MODE.id,bots:$('diff').selectedOptions[0]?.textContent||'',ranked:rankedMatch?1:0,touch:TOUCH.on?1:0});
+  SET.skill=+$('diff').value;SET.sens=+$('sens').value;const qv=$('qual').value;AQ.on=qv==='auto';SET.quality=AQ.on?(TOUCH.on?'low':'high'):qv;SET.fov=+$('fov').value;SET.aa=+$('aa').value;SET.cam=+$('cam').value;SET.autoReload=$('arl').value!=='0';applyQuality();initAudio();initMatch();sfTrack('match_start',{mode:MODE.id,bots:$('diff').selectedOptions[0]?.textContent||'',ranked:rankedMatch?1:0,touch:TOUCH.on?1:0});
   if(LOBBY.char){removeCharModel(LOBBY.char);LOBBY.char=null;}if(LOBBY.pet){scene.remove(LOBBY.pet.wrap);LOBBY.pet=null;}if(LOBBY.grp){scene.remove(LOBBY.grp);LOBBY.grp=null;}
   $('menu').classList.add('hidden');$('hud').classList.remove('hidden');
   buildShip();player=new Char('You',true);chars.push(player);player.m.root.visible=false;
@@ -4742,8 +4747,8 @@ function renderCredits(){const row=(w,a,l,u)=>`<div><b>${w}</b><span>${a}</span>
     +'<h4>PBR materials</h4>'+['Ground080','Grass005','Rock058','Ground054','Planks033B','PaintedWood009C','Tiles143','CorrugatedSteel007A','RoofingTiles014A','ThatchedRoof001A'].map(t=>row(t,'ambientCG','CC0 1.0','https://ambientcg.com/view?id='+t)).join('')
     +'<h4>Season 2 music</h4>'+['Island Meet and Greet','Pamgaea','Tiki Bar Mixer','Danger Storm'].map(t=>row(t,'Kevin MacLeod (incompetech.com)','CC BY 4.0','https://incompetech.com')).join('')
     +'<h4>Code and fonts</h4>'+row('three.js','three.js authors','MIT','https://threejs.org')+row('Barlow / Barlow Condensed','Jeremy Tribby','SIL Open Font License','https://fonts.google.com/specimen/Barlow')+row('Luckiest Guy','Astigmatic','SIL Open Font License','https://fonts.google.com/specimen/Luckiest+Guy');}
-function spritePageAvailable(){return (MODE.id==='br'||MODE.id==='nobuild')&&!$('rankedToggle').checked;}
-function syncSpritePageVisibility(){const available=spritePageAvailable(),button=document.querySelector('#tabs button[data-tab="sprites"]'),section=$('tab-sprites');button.classList.toggle('hidden',!available);section.classList.toggle('hidden',!available);if(!available&&menuTab==='sprites')showTab('play');}
+function spritePageAvailable(){return MODE.id==='br'||MODE.id==='nobuild';}
+function syncSpritePageVisibility(){const available=spritePageAvailable(),button=document.querySelector('#tabs button[data-tab="sprites"]'),section=$('tab-sprites');{let n=document.getElementById('spriteRankNote');const h=section&&section.querySelector('h3');if(!n&&h){n=document.createElement('p');n.id='spriteRankNote';n.className='settingsHint';n.textContent='Sprites are turned off in Ranked matches. Switch Ranked off on the Play tab to take one into a match.';h.after(n);}if(n)n.style.display=$('rankedToggle').checked?'':'none';}button.classList.toggle('hidden',!available);section.classList.toggle('hidden',!available);if(!available&&menuTab==='sprites')showTab('play');}
 function showTab(t){if(t==='sprites'&&!spritePageAvailable())return;const leftCustom=menuTab==='custom'&&t!=='custom';if(leftCustom&&custDirty()){custDiscard();toast('Unsaved customization discarded');}if(t==='credits')renderCredits();if(t==='events')renderEvents();if(t==='howto')renderHowto();menuTab=t;document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));document.querySelectorAll('#menu .tab').forEach(s=>s.classList.toggle('on',s.id==='tab-'+t));
   if(t==='maps')renderMyMaps();if(t==='sprites')renderSprites();if(t==='locker')renderLocker();if(t==='custom'){renderCustomize();custLobbyPreview();}if(leftCustom){spawnLobbyChar();spawnLobbyPet();}if(t==='shop')renderItemShop();if(t==='pass')renderPass();if(t==='career')renderCareer();renderWallet();sfx('ui');}
 function saveSnapshotObj(){const o={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&& k.startsWith('stormfall.'))o[k]=localStorage.getItem(k);}return o;}
@@ -4846,7 +4851,7 @@ function initMenuUI(){loadPets();initSaveUI();initWallEditUI();
     if(id==='renderScale'){SET.renderScale=clamp(+value,.6,1.2);$('renderScaleVal').textContent=Math.round(SET.renderScale*100)+'%';$('pRenderScale').value=value;applySize();}
     if(id==='shadows'){SET.shadows=value!=='0';$('pShadows').value=value;applyQuality();}
     if(id==='bloom'){SET.bloom=value!=='0';$('pBloom').value=value;}
-    if(id==='qual'){AQ.on=value==='auto';SET.quality=AQ.on?(TOUCH.on?'low':'medium'):value;$('pQual').value=value;applyQuality();}
+    if(id==='qual'){AQ.on=value==='auto';SET.quality=AQ.on?(TOUCH.on?'low':'high'):value;$('pQual').value=value;applyQuality();}
     if(id==='aa'){$('pAa').value=value;SET.aa=+value;}
     if(id==='sens'){$('pSens').value=value;SET.sens=+value;}
     if(id==='fov'){$('pFov').value=value;SET.fov=+value;$('pFovVal').textContent=value;}
@@ -4862,7 +4867,7 @@ function initMenuUI(){loadPets();initSaveUI();initWallEditUI();
   $('settingsReset').onclick=()=>{const defaults={inputMode:TOUCH.pref,qual:'auto',aa:'1',sens:'1',fov:'80',cam:'0',tod:'dynamic',diff:'1',arl:'1',editAfterBuild:'1',autoConfirmEdit:'off',turboBuild:'1',editTooltip:'1',vc:'0',renderScale:'1',shadows:'1',bloom:'1',sfx:'.75',mus:'.6'};
     for(const [key,value] of Object.entries(defaults)){PROFILE.set[key]=value;const control=$(key==='diff'?'diff':key);if(control)control.value=value;}
     $('setDiff').value='1';for(const id of [...settingIds,'setDiff'])$(id).dispatchEvent(new Event('input',{bubbles:true}));toast('Settings restored to defaults');};
-  AQ.on=$('qual').value==='auto';SET.quality=AQ.on?(TOUCH.on?'low':'medium'):$('qual').value;SET.sens=+$('sens').value;SET.fov=+$('fov').value;SET.aa=+$('aa').value;SET.cam=+$('cam').value;SET.autoReload=$('arl').value!=='0';
+  AQ.on=$('qual').value==='auto';SET.quality=AQ.on?(TOUCH.on?'low':'high'):$('qual').value;SET.sens=+$('sens').value;SET.fov=+$('fov').value;SET.aa=+$('aa').value;SET.cam=+$('cam').value;SET.autoReload=$('arl').value!=='0';
   setSfxVol(SET.sfx);applyQuality();
   $('rankedToggle').checked=st.ranked==='1';$('rankedToggle').addEventListener('change',()=>{PROFILE.set.ranked=$('rankedToggle').checked?'1':'0';saveProfile();refreshRankUI();syncSpritePageVisibility();}); 
   refreshRankUI();renderWallet();}
@@ -5868,7 +5873,7 @@ function initPauseUI(){let exitArm=0;
   $('pEditTooltip').onchange=e=>{$('editTooltip').value=e.target.value;PROFILE.set.editTooltip=e.target.value;saveProfile();editHint(uiOpen==='edit');};
   $('pVc').value=VC.on()?'1':'0';$('pVc').onchange=e=>{PROFILE.set.vc=e.target.value;$('vc').value=e.target.value;saveProfile();if(!VC.on())VC.stop();};
   $('vc').addEventListener('input',()=>{$('pVc').value=$('vc').value;});
-  $('pQual').onchange=e=>{const v=e.target.value;AQ.on=v==='auto';SET.quality=AQ.on?(TOUCH.on?'low':'medium'):v;$('qual').value=v;applyQuality();PROFILE.set.qual=v;saveProfile();};
+  $('pQual').onchange=e=>{const v=e.target.value;AQ.on=v==='auto';SET.quality=AQ.on?(TOUCH.on?'low':'high'):v;$('qual').value=v;applyQuality();PROFILE.set.qual=v;saveProfile();};
   $('pRenderScale').oninput=e=>{SET.renderScale=clamp(+e.target.value,.6,1.2);$('renderScale').value=e.target.value;$('pRenderScaleVal').textContent=$('renderScaleVal').textContent=Math.round(SET.renderScale*100)+'%';PROFILE.set.renderScale=SET.renderScale;saveProfile();applySize();};
   $('pShadows').onchange=e=>{SET.shadows=e.target.value!=='0';$('shadows').value=e.target.value;PROFILE.set.shadows=e.target.value;saveProfile();applyQuality();};
   $('pBloom').onchange=e=>{SET.bloom=e.target.value!=='0';$('bloom').value=e.target.value;PROFILE.set.bloom=e.target.value;saveProfile();};
@@ -8696,7 +8701,7 @@ body.touch #s2vKeys .row{display:none}body:not(.touch) #vehKeysTxt{display:none}
 const _s2hvStep=step;step=function(dt){_s2hvStep(dt);try{if(!player||!player.m)return;const v=player.vehicle,inH=!!(v&&v.craft==='heli');if(inH&&!player._hHid){player._hHid=1;player.m.root.visible=false;}else if(!inH&&player._hHid){player._hHid=0;player.m.root.visible=true;}
   s2vPanel(v,inH,dt);
   const el=document.getElementById('vehKeysTxt');if(el){const t=inH?'Look to steer · W / S forward/back · A / D slide · Space up · Ctrl down · R gas can · E exit':v&&v.craft==='boat'?'W / S throttle · A / D steer · R gas can · E exit':'W / S drive · A / D steer · Space handbrake · Shift boost · H horn · R gas can · E exit';if(el.textContent!==t)el.textContent=t;}}catch(e){}};
-window.s2mObjDbg=(k,x,y,z)=>s2mObj(k,x,y,z);window.s2xRideDbg=(t,a,b)=>s2xRide(t,a,b);window.__S2L={S2LIFT,S2R,S2X,s2GH,get MODELS(){return MODELS},Char,SKIN_BY,S2M,S2H:()=>S2H,animChar,removeCharHB,S2_SKIN_BODY,drawMap,EVM:()=>EVM,evMats:()=>evMats(),S2X,FLATS,vehicles,terrainH,s2RoadNear,POIS,groundAt,enterVehicle,get chars(){return chars},get MODE(){return MODE},ship:()=>ship,s2Optimize,get SET(){return SET},cut:()=>S2CUT,voBusy:()=>s2VoBusy(),get LOBBYc(){return LOBBY.char}};
+window.s2mObjDbg=(k,x,y,z)=>s2mObj(k,x,y,z);window.s2xRideDbg=(t,a,b)=>s2xRide(t,a,b);window.__S2L={S2LIFT,S2R,S2X,s2GH,get MODELS(){return MODELS},Char,SKIN_BY,S2M,S2H:()=>S2H,animChar,removeCharHB,S2_SKIN_BODY,drawMap,EVM:()=>EVM,evMats:()=>evMats(),S2X,FLATS,vehicles,terrainH,s2RoadNear,POIS,groundAt,enterVehicle,get chars(){return chars},get MODE(){return MODE},ship:()=>ship,s2Optimize,get SET(){return SET},cut:()=>S2CUT,voBusy:()=>s2VoBusy(),get LOBBYc(){return LOBBY.char},damageChar,get S2FPS(){return S2FPS},get S2WEAK(){return S2WEAK}};
 
 // ---------- Battle Royale Duos and Squads: you and 1 or 3 bot teammates against the other teams ----------
 var SQUAD=(()=>{try{return +sessionStorage.getItem('stormfall.squad')||1;}catch(e){return 1;}})();
@@ -8724,8 +8729,10 @@ const _s2sqThink=botThink;botThink=function(b){const r=_s2sqThink(b);try{if(s2sq
 function s2Optimize(){const set=(id,v,ev)=>{const el=document.getElementById(id);if(!el)return;el.value=v;el.dispatchEvent(new Event(ev||'change',{bubbles:true}));};
   set('qual','potato');set('shadows','0');set('bloom','0');set('renderScale','0.7','input');set('pQual','potato');set('pShadows','0');set('pBloom','0');set('pRenderScale','0.7','input');
   AQ.on=false;SET.quality='potato';SET.shadows=false;SET.bloom=false;SET.renderScale=.7;try{PROFILE.set.qual='potato';PROFILE.set.shadows='0';PROFILE.set.bloom='0';PROFILE.set.renderScale=.7;saveProfile();}catch(e){}applyQuality();
-  toast('Optimized: Potato graphics, no shadows or glow, 70% render scale');}
+  if(S2WEAK)s2SetFps(30);toast('Optimized: Potato graphics, no shadows or glow, 70% render scale'+(S2WEAK?', 30 FPS':''));}
 for(const id of ['optBtn','pOptBtn']){const b=document.getElementById(id);if(b)b.onclick=s2Optimize;}
+function s2SetFps(v){S2FPS=+v;try{localStorage.setItem('stormfall.fps',String(S2FPS));}catch(e){}for(const id of ['fpsCap','pFpsCap']){const el=document.getElementById(id);if(el)el.value=String(S2FPS);}}
+for(const id of ['fpsCap','pFpsCap']){const el=document.getElementById(id);if(el){el.value=String(S2FPS);el.addEventListener('change',e=>{e.stopPropagation();s2SetFps(el.value);});}}
 
 // ---------- Season 2 story: a short film the first time the game loads ----------
 // Last season's champion breaks the Storm Engine, the sea floods the island, and the Stormkeepers send them back into the storm.
